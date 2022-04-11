@@ -89,7 +89,7 @@ with open('./data/retrieval_result/train.retrieval_id', 'r') as f:
             ctxs.append({"title":"", "text":doc_psg_all[psg_idx]})
         ctxs_list.append(ctxs)
 train_data = [{'id':id, 'question':question, 'target':target, 'answers':answers, 'ctxs':ctxs} for id, question, target, answers, ctxs in zip(id_list, question_list, target_list, answers_list, ctxs_list)]
-with open('./data/fid/train_50.json', 'w') as f:
+with open('./data/train_50.json', 'w') as f:
     json.dump(train_data, f, indent=4)
 
 id_list = []

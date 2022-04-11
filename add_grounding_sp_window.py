@@ -11,7 +11,7 @@ with open('./data/train_50.json','r') as f:
 a, b = 0, 0
 cq0, cq1 = 0, 0
 count0,count1 = 0, 0
-with open('./data/grounding/train_grounding_100.json','r') as f:
+with open('./data/grounding/train_grounding.json','r') as f:
 	grounding_dict = json.load(f)
 	for data in tqdm(train_data):
 		id = data['id']
@@ -46,7 +46,7 @@ print(b)
 print(f"cq0:{cq0}, cq1:{cq1}")
 print(f"count0:{count0}, count1:{count1}")
 
-with open('./data/grounding/train_50_sp_window.json', 'w') as f:
+with open('./data/train_50_w_grounding_sp_window.json', 'w') as f:
         json.dump(train_data, f, indent=4)
 
 
@@ -84,5 +84,5 @@ with open('./data/grounding/val_grounding_100.json','r') as f:
 print(c)
 print(d)
 
-with open('./data/grounding/val_50_sp_window.json', 'w') as f:
+with open('./data/val_50_w_grounding_sp_window.json', 'w') as f:
         json.dump(val_data, f, indent=4)

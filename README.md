@@ -1,7 +1,7 @@
 ## acknowledgement
 We use the paper《Leveraging passage retrieval with generative models for open domain question answering》by G Izacard, E Grave, etc. as our code base.
 
-Our solution is a three-stage method. (1) Retrieval (2) Reader (3) Generator. More details can be seen in our workshop paper 《G4: Grounding-guided Goal-oriented Dialogues Generation with Multiple Documents》
+Our solution is a three-stage method. (1) Retriever (2) Reader (3) Generator. More details can be seen in our workshop paper 《G4: Grounding-guided Goal-oriented Dialogues Generation with Multiple Documents》
 
 ## Dependencies
 - Python 3
@@ -16,7 +16,7 @@ Our solution is a three-stage method. (1) Retrieval (2) Reader (3) Generator. Mo
 # Data
 ### Preprocess data
 
-Retrieval id is needed from DPR before Preprocess
+Retrieval id is needed from DPR before Preprocess(We upload the retrieval result in temp. We will upload the code of retriever in future!)
 ```shell
 python data_preprocess_fid.py
 ```
@@ -62,25 +62,9 @@ Fusion-in-Decoder models can be trained using [`train_reader.py`](train_reader.p
 
 train
 ```shell
-python train_reader.py \
-        --train_data ./open_domain_data/multidoc2dial/train_50.json \
-        --eval_data ./open_domain_data/multidoc2dial/val_50.json \
-        --model_size base \
-        --per_gpu_batch_size 1 \
-        --accumulation_steps 2 \
-        --n_context 50 \
-        --name my_experiment \
-        --text_maxlength 512 \
-        --answer_maxlength 50 \
-        --total_steps 50000 \
-        --use_checkpoint \
-```
-
-or distribute_train
-```shell
 python -m torch.distributed.launch --nproc_per_node=4 --master_port 5678 train_reader.py \
-        --train_data ./open_domain_data/multidoc2dial/train_50.json \
-        --eval_data ./open_domain_data/multidoc2dial/val_50.json \
+        --train_data ./data/train_50.json \
+        --eval_data ./data/val_50.json \
         --model_size base \
         --per_gpu_batch_size 1 \
         --accumulation_steps 2 \
@@ -99,7 +83,7 @@ You can evaluate your model or a pretrained model with [`test_reader.py`](test_r
 ```shell
 python test_reader.py \
         --model_path ./checkpoint/my_experiment/checkpoint/best_dev \
-        --eval_data ./open_domain_data/multidoc2dial/val_50.json \
+        --eval_data .data/val_50.json \
         --per_gpu_batch_size 16 \
         --n_context 50 \
         --text_maxlength 512 \
@@ -112,13 +96,13 @@ python test_reader.py \
 
 adding grounding information in passages will enhance the representation of passages.
 ```shell
-# need train_grounding.json, val_grounding.json. We get them by a simple span-extraction MRC model. Train model with train data, and infer grounding in train and val data.
+# need train_grounding.json, val_grounding.json. We get them by a simple span-extraction MRC model. Train model with train data, and infer grounding in train and val data.(We upload the grounding result in temp. We will upload the code of reader in future!)
 python add_grounding_sp_window.py
 # generate the train and val data with enhanced passages
 # train_50_w_grounding_sp_window.json, val_50_w_grounding_sp_window.json
 python -m torch.distributed.launch --nproc_per_node=4 --master_port 5678 train_reader.py \
-        --train_data ./open_domain_data/multidoc2dial/train_50_w_grounding_sp_window.json \
-        --eval_data ./open_domain_data/multidoc2dial/val_50_w_grounding_sp_window.json \
+        --train_data ./data/train_50_w_grounding_sp_window.json \
+        --eval_data ./data/val_50_w_grounding_sp_window.json \
         --model_size base \
         --per_gpu_batch_size 1 \
         --accumulation_steps 2 \

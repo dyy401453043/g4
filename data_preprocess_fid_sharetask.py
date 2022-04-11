@@ -75,7 +75,7 @@ with open('./data/mdd_share/share.id', 'r') as f:
 with open('./data/mdd_share/share.source', 'r') as f:
     for line in f:
         question_list.append(line.strip())
-with open('./data/mdd_share/share.retrieval_id', 'r') as f:
+with open('./data/retrieval_result/share.retrieval_id', 'r') as f:
     for line in f:
         number_list = [int(i) for i in line.split('\t')][:50]
         ctxs = []
@@ -84,6 +84,6 @@ with open('./data/mdd_share/share.retrieval_id', 'r') as f:
             ctxs.append({"title":"", "text":doc_psg_all[psg_idx]})
         ctxs_list.append(ctxs)
 share_data = [{'id':id, 'question':question, 'target':'', 'answers':[''], 'ctxs':ctxs} for id, question, ctxs in zip(id_list, question_list, ctxs_list)]
-with open('share_50.json', 'w') as f:
+with open('./data/share_50.json', 'w') as f:
     json.dump(share_data, f, indent=4)
 
