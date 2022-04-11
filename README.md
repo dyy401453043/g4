@@ -1,5 +1,5 @@
 ## acknowledgement
-We use the paper《Leveraging passage retrieval with generative models for open domain question answering》as our code base.
+We use the paper《Leveraging passage retrieval with generative models for open domain question answering》by G Izacard, E Grave, etc. as our code base.
 
 Our solution is a three-stage method. (1) Retrieval (2) Reader (3) Generator. More details can be seen in our workshop paper 《G4: Grounding-guided Goal-oriented Dialogues Generation with Multiple Documents》
 
