@@ -105,7 +105,6 @@ python test_reader.py \
         --text_maxlength 512 \
         --answer_maxlength 50 \
         --name val_n_50 \
-        --write_crossattention_scores \
         --write_results
 ```
 
@@ -128,4 +127,5 @@ python -m torch.distributed.launch --nproc_per_node=4 --master_port 5678 train_r
         --text_maxlength 512 \
         --answer_maxlength 50 \
         --total_steps 50000 \
+        --use_checkpoint \
 ```
